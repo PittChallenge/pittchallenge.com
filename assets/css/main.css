@@ -1623,7 +1623,7 @@
 	}
 
 	body {
-		background-color: #935d8c;
+		background-color: #1c2957;
 		background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #1c2957 15%, #cdb87d 85%);
 		background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #1c2957 15%, #cdb87d 85%);
 		background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #1c2957 15%, #cdb87d 85%);
@@ -3562,10 +3562,10 @@
 
 		#main header.major h2:after {
 			background-color: #dddddd;
-			background-image: -moz-linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
-			background-image: -webkit-linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
-			background-image: -ms-linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
-			background-image: linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
+			background-image: -moz-linear-gradient(90deg, #1c2957, #cdb87d, #8cc9f0);
+			background-image: -webkit-linear-gradient(90deg, #1c2957, #cdb87d, #8cc9f0);
+			background-image: -ms-linear-gradient(90deg, #1c2957, #cdb87d, #8cc9f0);
+			background-image: linear-gradient(90deg, #1c2957, #cdb87d, #8cc9f0);
 		}
 
 		#main table tbody tr {
