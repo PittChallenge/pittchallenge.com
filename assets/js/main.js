@@ -137,3 +137,24 @@
 	});
 
 })(jQuery);
+
+function vidSwitch(num) {
+	var frame = document.getElementById('challenge-vids'); 
+	switch (num) {
+		case 'one':
+			frame.src = "https://www.youtube.com/embed/TESgXLwI8DU?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
+			break;
+		case 'two':
+			frame.src = "https://www.youtube.com/embed/mv2RytgqNQU?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
+			break;
+		case 'three':
+			frame.src = "https://www.youtube.com/embed/X6QBq6H5g00?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
+			break; 
+		case 'four':
+			frame.src = "https://www.youtube.com/embed/2q87tGGafsk?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
+			break;
+		default:
+			frame.src = "https://www.youtube.com/embed/TESgXLwI8DU?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
+			break;
+	}
+}
