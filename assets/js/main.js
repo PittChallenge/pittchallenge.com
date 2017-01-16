@@ -159,6 +159,9 @@ function vidSwitch(num) {
         case 'six':
             frame.src = "https://www.youtube.com/embed/_I4ba25LJ0k?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
             break;
+        case 'seven':
+            frame.src = "https://www.youtube.com/embed/9A892NINBKQ?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
+            break;
         default:
             frame.src = "https://www.youtube.com/embed/TESgXLwI8DU?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
             break;
