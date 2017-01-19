@@ -162,6 +162,12 @@ function vidSwitch(num) {
         case 'seven':
             frame.src = "https://www.youtube.com/embed/9A892NINBKQ?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
             break;
+        case 'eight':
+            frame.src = "https://www.youtube.com/embed/wQJzo32TOa0?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
+            break;
+        case 'nine':
+            frame.src = "https://www.youtube.com/embed/WhXvRZZ7c98?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
+            break;
         default:
             frame.src = "https://www.youtube.com/embed/TESgXLwI8DU?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
             break;
