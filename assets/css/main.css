@@ -1652,12 +1652,13 @@
 
 	}
 
+
 	body {
-		background-color: #1c2957;
-		background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #1c2957 15%, #cdb87d 85%);
-		background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #1c2957 15%, #cdb87d 85%);
-		background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #1c2957 15%, #cdb87d 85%);
-		background-image: url("images/overlay.png"), linear-gradient(45deg, #1c2957 15%, #cdb87d 85%);
+		background-color: #453A42;
+		background-image: url("images/overlay.png"), -moz-linear-gradient(80deg, #98B8D5 10%, #7E4C59 85%);
+		background-image: url("images/overlay.png"), -webkit-linear-gradient(80deg, #98B8D5 10%, #7E4C59 85%);
+		background-image: url("images/overlay.png"), -ms-linear-gradient(80deg, #98B8D5 10%, #7E4C59 85%);
+		background-image: url("images/overlay.png"), linear-gradient(80deg, #98B8D5 10%, #7E4C59 85%);
 	}
 
 		body.is-loading *, body.is-loading *:before, body.is-loading *:after {
@@ -1674,7 +1675,7 @@
 /* Type */
 
 	body {
-		background-color: #935d8c;
+		background-color: #453A42;
 		color: rgba(255, 255, 255, 0.65);
 	}
 
