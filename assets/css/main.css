@@ -2480,13 +2480,20 @@
 		}
 
 		.image.fit {
-			display: block;
+			display: inline-block;
 			margin: 0 0 2em 0;
 			width: 100%;
 		}
 
 			.image.fit img {
 				width: 100%;
+				height: 80%; 
+			}
+
+			.image.fit.logo {
+			    display: inline-block;
+			    height: 350px;
+			    vertical-align: middle;
 			}
 
 		.image.main {
