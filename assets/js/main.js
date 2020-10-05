@@ -142,7 +142,7 @@ function vidSwitch(num) {
     var frame = document.getElementById('challenge-vids');
     switch (num) {
         case 'one':
-            frame.src = "https://www.youtube.com/embed/TESgXLwI8DU?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
+            frame.src = "https://www.youtube.com/embed/iaSdqH-Y3Co";
             break;
         case 'two':
             frame.src = "https://www.youtube.com/embed/mv2RytgqNQU?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
@@ -154,10 +154,10 @@ function vidSwitch(num) {
             frame.src = "https://www.youtube.com/embed/2q87tGGafsk?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
             break;
         case 'five':
-            frame.src = "https://www.youtube.com/embed/irW938cqClY?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
+            frame.src = "https://www.youtube.com/embed/yqgDpuAh85U";
             break;
         case 'six':
-            frame.src = "https://www.youtube.com/embed/_I4ba25LJ0k?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
+            frame.src = "https://www.youtube.com/embed/iaSdqH-Y3Co";
             break;
         case 'seven':
             frame.src = "https://www.youtube.com/embed/9A892NINBKQ?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
