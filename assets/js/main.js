@@ -145,10 +145,10 @@ function vidSwitch(num) {
             frame.src = "https://www.youtube.com/embed/iaSdqH-Y3Co";
             break;
         case 'two':
-            frame.src = "https://www.youtube.com/embed/mv2RytgqNQU?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
+            frame.src = "https://www.youtube.com/embed/sLerzEmf9Uw";
             break;
         case 'three':
-            frame.src = "https://www.youtube.com/embed/X6QBq6H5g00?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
+            frame.src = "https://www.youtube.com/embed/evM8ucLALSY";
             break;
         case 'four':
             frame.src = "https://www.youtube.com/embed/2q87tGGafsk?list=PLIi-JVODZkTPptRTj5_Xh-yykA5cttBVl";
