@@ -2781,7 +2781,7 @@
 
 	table {
 		margin: 0 0 2em 0;
-		width: 107%;
+		width: 100%;
 	}
 
 		table tbody tr {
@@ -3367,7 +3367,7 @@
 			background-color: rgba(247, 247, 247, 0.95);
 			border-top-left-radius: 0;
 			border-top-right-radius: 0;
-			z-index: 10000;
+			z-index: 9999;
 		}
 
 			#nav.alt ul li {
