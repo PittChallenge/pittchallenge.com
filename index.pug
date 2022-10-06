@@ -1,0 +1,85 @@
+doctype html
+include _global
+head
+  title The Pitt Challenge
+
+  meta(charset='utf-8')
+  // Primary Meta Tags
+  title The Pitt Challenge
+  meta(name='title' content='The Pitt Challenge')
+  meta(name='description' content='The Pitt Challenge is 24-hr hackathon sponsored by the University of Pittsburgh School of Pharmacy')
+  // Open Graph / Facebook
+  meta(property='og:type' content='website')
+  meta(property='og:url' content='https://pittchallenge.com/')
+  meta(property='og:title' content='The Pitt Challenge')
+  meta(property='og:description' content='The Pitt Challenge is 24-hr hackathon sponsored by the University of Pittsburgh School of Pharmacy')
+  meta(property='og:image' content='_images/pitt-challenge.png')
+  // Twitter
+  meta(property='twitter:card' content='summary_large_image')
+  meta(property='twitter:url' content='https://pittchallenge.com/')
+  meta(property='twitter:title' content='The Pitt Challenge')
+  meta(property='twitter:description' content='The Pitt Challenge is 24-hr hackathon sponsored by the University of Pittsburgh School of Pharmacy')
+  meta(property='twitter:image' content='_images/pitt-challenge.png')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+  link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+  link(rel='stylesheet' href='_sass/main.css')
+
+  link(rel='shortcut icon' type='image/x-icon' href='favicon.ico')
+
+body
+  #wrapper
+    header#header.alt
+
+      //- MLH Banners
+      span
+        a#mlh-trust-badge(href='https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=yellow' target='_blank')
+          img(src='https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-yellow.svg' alt='Major League Hacking 2023 Hackathon Season' style='width:100%')
+
+      span.logo
+        img(src='_images/pitt-challenge.svg' alt='' width='20%' height='20%')
+
+      h1 The Pitt Challenge
+      h2 A hackathon sponsored by the University of Pittsburgh School of Pharmacy
+
+      if registrationOpen
+        p(style='margin: 0 0 0.5em 0')  Occurring October 21st - 22nd in person!
+        a.button(style='background-color:#e63760;' href=registrationFormLink) Register Now!
+        p(style='font-size: smaller;')  [ Limited seats available. ]
+      else
+        p(style="color:tomato;font-weight:500") [Registration is now closed.]
+
+    nav#nav
+      ul
+        li
+          a.active(href='#intro' style='font-size: 150%') Introduction
+        li
+          a(href='#schedule' style='font-size: 150%') Schedule
+        li
+          a(href='#challenges' style='font-size: 150%') Tracks
+        li
+          a(href='#prizes' style='font-size: 150%') Prizes
+        li
+          a(href='#faq' style='font-size: 150%') FAQ
+        li
+          a(href='#attendees' style='font-size: 150%') Sponsors
+    #main
+      include _index_src/introduction
+      include _index_src/schedule
+      include _index_src/tracks
+      include _index_src/prizes
+      include _index_src/faq
+      include _index_src/attendees
+      include _index_src/footer
+
+// Scripts
+script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js' integrity='sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery.scrollex/0.2.1/jquery.scrollex.min.js' integrity='sha512-eFxuATJvNeUrxxoS/5AeVi6X4wY6IdI9kAtRbuGyD2XTLoJ/R9uBce9lsf2UyvY0tQYlUkbs1wV9jhOPxANCzg==' crossorigin='anonymous' referrerpolicy='no-referrer')
+script(src='https://cdn.jsdelivr.net/npm/jquery.scrolly@0.0.1/jquery.scrolly.js')
+script(src='https://cdnjs.cloudflare.com/ajax/libs/skel/3.0.1/skel.min.js' integrity='sha512-LpUt6fJuTMm3o0q5w8ydMXpGho2tqAoaRu6MP6Tt0X0Klct8xlToutBk7Wh51RL9n7/QSplQnrUA1U3S5YzMng==' crossorigin='anonymous' referrerpolicy='no-referrer')
+script(src='_js/breakpoints.min.js')
+script(src='_js/browser.min.js')
+script(src='_js/util.min.js')
+script(src='_js/proportional-image.min.js')
+script(src='_js/main.min.js')
