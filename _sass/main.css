@@ -1,4 +1,3 @@
-@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400';
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
 pre, a, abbr, acronym, address, big, cite,
@@ -87,11 +86,11 @@ html {
 }
 
 body {
-  background-color: #935d8c;
-  background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-  background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-  background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-  background-image: url("images/overlay.png"), linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+  background-color: #453A42;
+  background-image: url("overlay.png"), -moz-linear-gradient(80deg, #98B8D5 15%, #7E4C59 85%);
+  background-image: url("overlay.png"), -webkit-linear-gradient(80deg, #98B8D5 15%, #7E4C59 85%);
+  background-image: url("overlay.png"), -ms-linear-gradient(80deg, #98B8D5 15%, #7E4C59 85%);
+  background-image: url("overlay.png"), linear-gradient(80deg, #98B8D5 15%, #7E4C59 85%);
 }
 body.is-preload *, body.is-preload *:before, body.is-preload *:after {
   -moz-animation: none !important;
@@ -106,7 +105,7 @@ body.is-preload *, body.is-preload *:before, body.is-preload *:after {
 
 /* Type */
 body {
-  background-color: #935d8c;
+  background-color: #453A42;
   color: rgba(255, 255, 255, 0.65);
 }
 
@@ -1747,7 +1746,7 @@ select {
 }
 select option {
   color: #ffffff;
-  background: #935d8c;
+  background: #453A42;
 }
 
 input[type=checkbox] + label,
@@ -1763,7 +1762,7 @@ input[type=checkbox]:checked + label:before,
 input[type=radio]:checked + label:before {
   background-color: #ffffff;
   border-color: #ffffff;
-  color: #935d8c;
+  color: #453A42;
 }
 input[type=checkbox]:focus + label:before,
 input[type=radio]:focus + label:before {
