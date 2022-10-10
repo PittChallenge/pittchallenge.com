@@ -3074,4 +3074,17 @@ a.attendees-images {
   height: 100%;
 }
 
+.grandPrices {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 0 24px 0;
+}
+.grandPrices * {
+  font-size: 1.25em;
+  font-weight: 500;
+}
+
 /*# sourceMappingURL=main.css.map */
