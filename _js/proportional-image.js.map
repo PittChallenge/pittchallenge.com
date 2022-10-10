@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"",
-"lineCount":1,
-"mappings":"AAAC,SAAS,EAAG,CAETA,QAASA,EAAgB,CAACC,CAAD,CAAQ,CAK7BA,CAAMC,CAAAA,KAAN,CAJkBC,EAIlB,CAAcC,IAAKC,CAAAA,GAAL,CAFKJ,CAAMK,CAAAA,YAEX,CAF0BL,CAAMM,CAAAA,aAEhC,CAHMC,GAGN,CALe,CAQjCC,MAAOC,CAAAA,MAAP,CAAgBC,QAAS,EAAG,CACTC,QAASC,CAAAA,gBAATC,CAA0B,sBAA1BA,CACRC,CAAAA,OAAP,CAAef,CAAf,CAFwB,CAVnB,CAAZ,CAAA;",
-"sources":["proportional-image.js"],
-"names":["adjustImageWidth","image","width","widthBase","Math","pow","naturalWidth","naturalHeight","scaleFactor","window","onload","window.onload","document","querySelectorAll","images","forEach"]
-}
