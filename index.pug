@@ -52,11 +52,13 @@ body
       h1 The Pitt Challenge
       h2 A hackathon sponsored by the University of Pittsburgh School of Pharmacy
 
-      if registrationOpen
+      if (registration === "open")
         p(style='margin: 0 0 0.5em 0')  Occurring October 21st - 22nd in person!
         a.button(style='background-color:#e63760;' href=registrationFormLink) Register Now!
         p(style='font-size: smaller;')  [ Limited seats available. ]
-      else
+      if (registration === "on-site")
+        p(style="color:tomato;font-weight:500") [On-Site registration open in Benedum Hall.]
+      if (registration === "closed")
         p(style="color:tomato;font-weight:500") [Registration is now closed.]
 
     nav#nav
