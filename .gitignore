@@ -148,10 +148,10 @@ typings/
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 
-# next._js build output
+# next.z_js build output
 .next
 
-# nuxt._js build output
+# nuxt.z_js build output
 .nuxt
 
 # vuepress build output

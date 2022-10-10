@@ -14,7 +14,7 @@
         <array />
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="program" value="$PROJECT_DIR$/node_modules/.bin/pug" />
+      <option name="program" value="$ProjectFileDir$/node_modules/.bin/pug" />
       <option name="runOnExternalChanges" value="true" />
       <option name="scopeName" value="Project Files" />
       <option name="trackOnlyRoot" value="true" />
@@ -34,7 +34,7 @@
         <array />
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="program" value="$PROJECT_DIR$/node_modules/.bin/sass" />
+      <option name="program" value="$ProjectFileDir$/node_modules/.bin/sass" />
       <option name="runOnExternalChanges" value="true" />
       <option name="scopeName" value="Project Files" />
       <option name="trackOnlyRoot" value="true" />
@@ -54,7 +54,7 @@
         <array />
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="program" value="$PROJECT_DIR$/node_modules/.bin/sass" />
+      <option name="program" value="$ProjectFileDir$/node_modules/.bin/sass" />
       <option name="runOnExternalChanges" value="true" />
       <option name="scopeName" value="Project Files" />
       <option name="trackOnlyRoot" value="true" />
@@ -74,7 +74,7 @@
         <array />
       </option>
       <option name="outputFromStdout" value="true" />
-      <option name="program" value="$PROJECT_DIR$/node_modules/.bin/google-closure-compiler" />
+      <option name="program" value="$ProjectFileDir$/node_modules/.bin/google-closure-compiler" />
       <option name="runOnExternalChanges" value="true" />
       <option name="scopeName" value="Project Files" />
       <option name="trackOnlyRoot" value="true" />
