@@ -14,13 +14,14 @@
 		margin: 0 0 (_size(element-margin) * 1.5) (_size(element-margin) * -1);
 
 		> * {
-			width: calc(50% - #{_size(element-margin)});
+			//width: calc(50% - #{_size(element-margin)});
 			margin-left: _size(element-margin);
 		}
 
 		.copyright {
 			font-size: 0.8em;
 			text-align: left;
+			float: left;
 		}
 
 		.social {
@@ -40,9 +41,9 @@
 			width: 100%;
 
 			> * {
-				width: 100%;
+				//width: 100%;
 				margin-left: 0;
-				margin-bottom: (_size(element-margin) * 1.5);
+				//margin-bottom: (_size(element-margin) * 1.5);
 			}
 		}
 
