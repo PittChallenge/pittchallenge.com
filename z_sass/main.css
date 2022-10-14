@@ -2448,7 +2448,7 @@ table.alt tbody tr td {
     -webkit-flex-direction: column-reverse;
     -ms-flex-direction: column-reverse;
     flex-direction: column-reverse;
-    text-align: center;
+    text-align: justify;
   }
   .spotlight .content {
     -moz-flex: 0 1 auto;
@@ -3085,6 +3085,14 @@ a.attendees-images {
 .grandPrices * {
   font-size: 1.25em;
   font-weight: 500;
+}
+
+header.minor h3 {
+  text-align: left;
+  font-weight: 400;
+}
+header.minor p {
+  text-align: justify;
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -41,7 +41,7 @@
 
 		@include breakpoint('<=medium') {
 			@include vendor('flex-direction', 'column-reverse');
-			text-align: center;
+			text-align: justify;
 
 			.content {
 				@include vendor('flex', '0 1 auto');
