@@ -2457,6 +2457,9 @@ table.alt tbody tr td {
     flex: 0 1 auto;
     width: 100%;
   }
+  .spotlight .content header.major h2 {
+    text-align: center;
+  }
   .spotlight .content header.major h2:after {
     margin-left: auto;
     margin-right: auto;
