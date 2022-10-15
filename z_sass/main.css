@@ -2140,17 +2140,21 @@ section.special, article.special {
 }
 
 header.major {
+  text-align: center;
   margin-bottom: 3em;
 }
 header.major h2 {
   font-size: 2em;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 header.major h2:after {
   display: block;
   content: "";
-  width: 3.25em;
   height: 2px;
-  margin: 0.7em 0 1em 0;
+  margin-left: auto;
+  margin-right: auto;
   border-radius: 2px;
 }
 section.special header.major h2:after, article.special header.major h2:after {
@@ -2448,7 +2452,7 @@ table.alt tbody tr td {
     -webkit-flex-direction: column-reverse;
     -ms-flex-direction: column-reverse;
     flex-direction: column-reverse;
-    text-align: center;
+    text-align: justify;
   }
   .spotlight .content {
     -moz-flex: 0 1 auto;
@@ -2456,6 +2460,9 @@ table.alt tbody tr td {
     -ms-flex: 0 1 auto;
     flex: 0 1 auto;
     width: 100%;
+  }
+  .spotlight .content header.major h2 {
+    text-align: center;
   }
   .spotlight .content header.major h2:after {
     margin-left: auto;
@@ -3085,6 +3092,14 @@ a.attendees-images {
 .grandPrices * {
   font-size: 1.25em;
   font-weight: 500;
+}
+
+header.minor h3 {
+  text-align: left;
+  font-weight: 400;
+}
+header.minor p {
+  text-align: justify;
 }
 
 /*# sourceMappingURL=main.css.map */
