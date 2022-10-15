@@ -1,16 +1,8 @@
-(function () {
-    "use strict";
-    function adjustImageWidth(image) {
-        const widthBase = 70;
-        const scaleFactor = 1.2;
-        const imageRatio = image.naturalWidth / image.naturalHeight;
+"use strict";
+function adjustImageWidth(image) {
+    let dataSize = 1
+    if (image.hasAttribute("data-size")) dataSize = image.getAttribute("data-size")
+    image.style.maxHeight = (100 * dataSize) + "px";
+}
 
-        image.width = Math.pow(imageRatio, scaleFactor) * widthBase;
-    }
-
-    window.onload = function () {
-        const images = document.querySelectorAll("img.attendees-images");
-        images.forEach(adjustImageWidth);
-    };
-
-}());
+window.addEventListener("load", () => document.querySelectorAll("img.attendees-images").forEach(adjustImageWidth))

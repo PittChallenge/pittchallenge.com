@@ -73,8 +73,12 @@
   border-bottom-color: transparent;
 }
 
-a.attendees-images {
-  padding: 24px;
+a.attendees-images{
+  display: inline-block;
+  img.attendees-images {
+    padding: 8px;
+    max-width: calc(100% - (32px * 2));
+  }
 }
 
 .videoWrapper {
@@ -83,5 +87,28 @@ a.attendees-images {
   iframe.video {
     width: 100%;
     height: 100%;
+  }
+}
+
+.grandPrices {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 0 24px 0;
+  *{
+    font-size: 1.25em;
+    font-weight: 500;
+  }
+}
+
+header.minor{
+  h3{
+    text-align: left;
+    font-weight: 400;
+  }
+  p{
+    text-align: justify;
   }
 }

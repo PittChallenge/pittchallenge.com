@@ -2,7 +2,7 @@
 "version":3,
 "file":"",
 "lineCount":1,
-"mappings":"AAAC,SAAS,EAAG,CAETA,QAASA,EAAgB,CAACC,CAAD,CAAQ,CAK7BA,CAAMC,CAAAA,KAAN,CAJkBC,EAIlB,CAAcC,IAAKC,CAAAA,GAAL,CAFKJ,CAAMK,CAAAA,YAEX,CAF0BL,CAAMM,CAAAA,aAEhC,CAHMC,GAGN,CALe,CAQjCC,MAAOC,CAAAA,MAAP,CAAgBC,QAAS,EAAG,CACTC,QAASC,CAAAA,gBAATC,CAA0B,sBAA1BA,CACRC,CAAAA,OAAP,CAAef,CAAf,CAFwB,CAVnB,CAAZ,CAAA;",
+"mappings":"AACAA,QAASA,iBAAgB,CAACC,CAAD,CAAQ,CAC7B,IAAIC,EAAW,CACXD,EAAME,CAAAA,YAAN,CAAmB,WAAnB,CAAJ,GAAqCD,CAArC,CAAgDD,CAAMG,CAAAA,YAAN,CAAmB,WAAnB,CAAhD,CACAH,EAAMI,CAAAA,KAAMC,CAAAA,SAAZ,CAAyB,GAAzB,CAA+BJ,CAA/B,CAA2C,IAHd,CAMjCK,MAAOC,CAAAA,gBAAP,CAAwB,MAAxB,CAAgC,EAAA,EAAMC,QAASC,CAAAA,gBAAT,CAA0B,sBAA1B,CAAkDC,CAAAA,OAAlD,CAA0DX,gBAA1D,CAAtC;",
 "sources":["proportional-image.js"],
-"names":["adjustImageWidth","image","width","widthBase","Math","pow","naturalWidth","naturalHeight","scaleFactor","window","onload","window.onload","document","querySelectorAll","images","forEach"]
+"names":["adjustImageWidth","image","dataSize","hasAttribute","getAttribute","style","maxHeight","window","addEventListener","document","querySelectorAll","forEach"]
 }
