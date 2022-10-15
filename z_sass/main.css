@@ -3069,8 +3069,8 @@ body.is-preload #header.alt .logo {
   border-bottom-color: transparent;
 }
 
-a.attendees-images {
-  padding: 24px;
+img.attendees-images {
+  padding: 8px;
 }
 
 .videoWrapper {
