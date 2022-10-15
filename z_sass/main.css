@@ -2145,13 +2145,16 @@ header.major {
 }
 header.major h2 {
   font-size: 2em;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 header.major h2:after {
   display: block;
   content: "";
-  width: 3.25em;
   height: 2px;
-  margin: 0.7em 0 1em 0;
+  margin-left: auto;
+  margin-right: auto;
   border-radius: 2px;
 }
 section.special header.major h2:after, article.special header.major h2:after {
