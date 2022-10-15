@@ -3069,7 +3069,10 @@ body.is-preload #header.alt .logo {
   border-bottom-color: transparent;
 }
 
-img.attendees-images {
+a.attendees-images {
+  display: inline-block;
+}
+a.attendees-images img.attendees-images {
   padding: 8px;
 }
 

@@ -73,8 +73,11 @@
   border-bottom-color: transparent;
 }
 
-img.attendees-images {
-  padding: 8px;
+a.attendees-images{
+  display: inline-block;
+  img.attendees-images {
+    padding: 8px;
+  }
 }
 
 .videoWrapper {
