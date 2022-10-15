@@ -3074,6 +3074,7 @@ a.attendees-images {
 }
 a.attendees-images img.attendees-images {
   padding: 8px;
+  max-width: calc(100% - 64px);
 }
 
 .videoWrapper {
