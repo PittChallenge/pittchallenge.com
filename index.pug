@@ -53,7 +53,8 @@ body
       h2 A hackathon sponsored by the University of Pittsburgh School of Pharmacy
 
       if (registration === "soon")
-        p(style="color:#f8b92a;font-weight:500") [Coming Soon... Fall 2023]
+        p(style="color:#f8b92a;font-weight:500; margin-bottom: 0px;") [Coming Soon... Fall 2023]
+        a(style="color:white;font-weight:150;text-decoration: underline;", href=hackathonReport2022, target="blank") In the meantime, check out the results of Pitt Challenge 2022!
       if (registration === "open")
         p(style='margin: 0 0 0.5em 0')  Occurring October 21st - 22nd in person!
         a.button(style='background-color:#e63760;' href=registrationFormLink) Register Now!
@@ -62,6 +63,7 @@ body
         p(style="color:tomato;font-weight:500") [On-Site registration open in Benedum Hall.]
       if (registration === "closed")
         p(style="color:tomato;font-weight:500") [Registration is now closed.]
+
 
     nav#nav
       ul
