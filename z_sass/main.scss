@@ -112,3 +112,46 @@ header.minor{
     text-align: justify;
   }
 }
+
+#ourTeam {
+  #teamMembers {
+    display: flex;
+    max-width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 0 24px 0;
+
+    .teamMember {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 0 24px 0;
+      //max-width: 100%;
+      //width: 100%;
+
+      &.break {
+        flex-basis: 100%;
+        height: 0;
+      }
+
+      img{
+        max-width: 200px;
+        width: 20vw;
+        min-width: 100px;
+        height: auto;
+      }
+      h3{
+        text-align: center;
+        font-weight: 400;
+        font-size: 1em;
+      }
+      p{
+        text-align: justify;
+      }
+    }
+  }
+}
