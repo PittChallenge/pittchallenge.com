@@ -3121,13 +3121,14 @@ header.minor p {
   flex-wrap: nowrap;
   justify-content: space-around;
   align-items: center;
-  padding: 0 0 24px 0;
+  padding: 12px 36px;
 }
 #ourTeam #teamMembers .teamMember.break {
   flex-basis: 100%;
   height: 0;
 }
 #ourTeam #teamMembers .teamMember img {
+  position: relative;
   max-width: 200px;
   width: 20vw;
   min-width: 100px;
