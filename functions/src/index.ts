@@ -12,6 +12,7 @@ export const addRegistrationEntry = onRequest({
     cors: true,
     timeoutSeconds: 60,
     cpu: 1,
+    invoker: "public",
 }, (request, response) => {
     if (request.method !== "POST") {
         response.status(400).send("Invalid request");
