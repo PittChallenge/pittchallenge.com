@@ -47,9 +47,18 @@ export const addRegistrationEntry = onRequest({
         return;
     }
 
+    if (json.email === undefined) {
+        response.status(400).send("Invalid request body");
+        return;
+    }
+
     const db = getFirestore();
-    db.collection("registrations").doc(json.id).set(json).then(() => {
-        logger.info("Registration saved");
+    const promises = [
+        db.collection("registrations_id").doc(json.id).set(json),
+        db.collection("registrations_email").doc(json.email).set(json),
+    ];
+
+    Promise.all(promises).then(() => {
         response.status(200).send("OK");
     }).catch((error) => {
         logger.error(error);
