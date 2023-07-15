@@ -12,6 +12,7 @@
 		@include padding(5em, 5em);
 		width: calc(100% + #{_size(element-margin)});
 		margin: 0 0 (_size(element-margin) * 1.5) (_size(element-margin) * -1);
+		justify-content: space-between;
 
 		> * {
 			//width: calc(50% - #{_size(element-margin)});
@@ -21,13 +22,11 @@
 		.copyright {
 			font-size: 0.8em;
 			text-align: left;
-			float: left;
 		}
 
 		.social {
 			font-size: 0.8em;
 			text-align: right;
-			float: right;
 		}
 
 		@include breakpoint('<=large') {
