@@ -1,104 +1,77 @@
 doctype html
-include _global
-head
-  title The Pitt Challenge
+html
+  include _global
+  include z_index_src/head
 
-  meta(charset='utf-8')
-  //- Primary Meta Tags
-  title The Pitt Challenge
-  meta(name='title' content='The Pitt Challenge')
-  meta(name='description' content='The Pitt Challenge is 24-hr hackathon sponsored by the University of Pittsburgh School of Pharmacy')
-  //- Open Graph / Facebook
-  meta(property='og:type' content='website')
-  meta(property='og:url' content='https://pittchallenge.com/')
-  meta(property='og:title' content='The Pitt Challenge')
-  meta(property='og:description' content='The Pitt Challenge is 24-hr hackathon sponsored by the University of Pittsburgh School of Pharmacy')
-  meta(property='og:image' content='z_images/pitt-challenge.png')
-  //- Twitter
-  meta(property='twitter:card' content='summary_large_image')
-  meta(property='twitter:url' content='https://pittchallenge.com/')
-  meta(property='twitter:title' content='The Pitt Challenge')
-  meta(property='twitter:description' content='The Pitt Challenge is 24-hr hackathon sponsored by the University of Pittsburgh School of Pharmacy')
-  meta(property='twitter:image' content='z_images/pitt-challenge.png')
-  meta(name='viewport' content='width=device-width, initial-scale=1')
+  body
+    #wrapper
+      header#header.alt
 
-  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
-  link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
-  link(rel='stylesheet' href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400")
-  link(rel='stylesheet' href='z_sass/main.css')
-  
-  link(rel='apple-touch-icon' sizes='180x180' href='z_favicon/apple-touch-icon.png')
-  link(rel='icon' type='image/png' sizes='32x32' href='z_favicon/favicon-32x32.png')
-  link(rel='icon' type='image/png' sizes='16x16' href='z_favicon/favicon-16x16.png')
-  //- link(rel='manifest' href='_favicon/site.webmanifest')
-  link(rel='mask-icon' href='z_favicon/safari-pinned-tab.svg' color='#5bbad5')
-  link(rel='shortcut icon' href='z_favicon/favicon.ico')
-  meta(name='msapplication-TileColor' content='#da532c')
-  meta(name='msapplication-config' content='z_favicon/browserconfig.xml')
-  meta(name='theme-color' content='#ffffff')
+        //- MLH Banners
+        span
+          a#mlh-trust-badge(href='https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=yellow' target='_blank')
+            img(src='https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-yellow.svg' alt='Major League Hacking 2023 Hackathon Season' style='width:100%')
 
-body
-  #wrapper
-    header#header.alt
+        span.logo
+          img(src='z_images/pitt-challenge.svg' alt='' width='20%' height='20%' loading="lazy")
 
-      //- MLH Banners
-      span
-        a#mlh-trust-badge(href='https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2023-season&utm_content=yellow' target='_blank')
-          img(src='https://s3.amazonaws.com/logged-assets/trust-badge/2023/mlh-trust-badge-2023-yellow.svg' alt='Major League Hacking 2023 Hackathon Season' style='width:100%')
+        h1 The Pitt Challenge 2023
+        h2 A hackathon sponsored by the University of Pittsburgh School of Pharmacy
 
-      span.logo
-        img(src='z_images/pitt-challenge.svg' alt='' width='20%' height='20%' loading="lazy")
-
-      h1 The Pitt Challenge
-      h2 A hackathon sponsored by the University of Pittsburgh School of Pharmacy
-
-      if (registration === "soon")
-        p(style="color:#f8b92a;font-weight:500; margin-bottom: 0px;") [Coming Soon... Fall 2023]
-        a(style="color:white;font-weight:150;text-decoration: underline;", href='z_files/pitt-challenge-2022-report.pdf', target="blank") In the meantime, check out the results of The Pitt Challenge 2022!
-      if (registration === "open")
-        p(style='margin: 0 0 0.5em 0')  Occurring October 21st - 22nd in person!
-        a.button(style='background-color:#e63760;' href=registrationFormLink) Register Now!
-        p(style='font-size: smaller;')  [ Limited seats available. ]
-      if (registration === "on-site")
-        p(style="color:tomato;font-weight:500") [On-Site registration open in Benedum Hall.]
-      if (registration === "closed")
-        p(style="color:tomato;font-weight:500") [Registration is now closed.]
+        if (registration === "soon")
+          p(style="color:#f8b92a;font-weight:500; margin-bottom: 0px;") [Coming Soon... Fall 2023]
+          a(style="color:white;font-weight:150;text-decoration: underline;", href='z_files/pitt-challenge-2022-report.pdf', target="blank") In the meantime, check out the results of The Pitt Challenge 2022!
+        if (registration === "open")
+          p(style='margin: 0 0 0.5em 0')  Occurring Sept 15st - 17nd in person! (42 hours)
+          a.button(style='background-color:#e63760;' href=registrationFormLink) Register Now!
+          p(style='font-size: smaller;')  [ Limited seats available. ]
+        if (registration === "on-site")
+          p(style="color:tomato;font-weight:500") [On-Site registration open in Benedum Hall.]
+        if (registration === "closed")
+          p(style="color:tomato;font-weight:500") [Registration is now closed.]
 
 
-    nav#nav
-      ul
-        li
-          a.active(href='#intro' style='font-size: 150%') Introduction
-        //li
-        //  a(href='#schedule' style='font-size: 150%') Schedule
-        li
-          a(href='#challenges' style='font-size: 150%') Tracks
-        //li
-        //  a(href='#prizes' style='font-size: 150%') Prizes
-        li
-          a(href='#faq' style='font-size: 150%') FAQ
-        li
-          a(href='#ourTeam' style='font-size: 150%') Our Team
-        //li
-        //  a(href='#' style='font-size: 150%') Sponsors
-    #main
-      include z_index_src/introduction
-      //include z_index_src/schedule
-      include z_index_src/tracks
-      //include z_index_src/prizes
-      include z_index_src/faq
-      include z_index_src/outTeam
-      //include z_index_src/sponsors
-      include z_index_src/footer
+      nav#nav
+        ul
+          li
+            a.active(href='#intro' style='font-size: 150%') Introduction
+          li
+            a(href='#schedule' style='font-size: 150%') Schedule
+          li
+            a(href='#challenges' style='font-size: 150%') Tracks
+          //li
+          //  a(href='#prizes' style='font-size: 150%') Prizes
+          li
+            a(href='#faq' style='font-size: 150%') FAQ
+          li
+            a(href='#ourTeam' style='font-size: 150%') Our Team
+          //li
+          //  a(href='#' style='font-size: 150%') Sponsors
+      #main
+        include z_index_src/introduction
+        include z_index_src/schedule
+        include z_index_src/tracks
+        //include z_index_src/prizes
+        include z_index_src/faq
+        include z_index_src/outTeam
+        //include z_index_src/sponsors
+        include z_index_src/footer
 
-//- Scripts
-script(type="text/javascript" id="hs-script-loader" async defer src="https://js-na1.hs-scripts.com/40016037.js")
-script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js' integrity='sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==' crossorigin='anonymous' referrerpolicy='no-referrer')
-script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery.scrollex/0.2.1/jquery.scrollex.min.js' integrity='sha512-eFxuATJvNeUrxxoS/5AeVi6X4wY6IdI9kAtRbuGyD2XTLoJ/R9uBce9lsf2UyvY0tQYlUkbs1wV9jhOPxANCzg==' crossorigin='anonymous' referrerpolicy='no-referrer')
-script(src='https://cdn.jsdelivr.net/npm/jquery.scrolly@0.0.1/jquery.scrolly.js')
-script(src='https://cdnjs.cloudflare.com/ajax/libs/skel/3.0.1/skel.min.js' integrity='sha512-LpUt6fJuTMm3o0q5w8ydMXpGho2tqAoaRu6MP6Tt0X0Klct8xlToutBk7Wh51RL9n7/QSplQnrUA1U3S5YzMng==' crossorigin='anonymous' referrerpolicy='no-referrer')
-script(src='z_js/breakpoints.min.js')
-script(src='z_js/browser.min.js')
-script(src='z_js/util.min.js')
-script(src='z_js/proportional-image.min.js')
-script(src='z_js/main.min.js')
+  //- Scripts
+  script(defer type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js' integrity='sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(defer type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery.scrollex/0.2.1/jquery.scrollex.min.js' integrity='sha512-eFxuATJvNeUrxxoS/5AeVi6X4wY6IdI9kAtRbuGyD2XTLoJ/R9uBce9lsf2UyvY0tQYlUkbs1wV9jhOPxANCzg==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(defer type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/skel/3.0.1/skel.min.js' integrity='sha512-LpUt6fJuTMm3o0q5w8ydMXpGho2tqAoaRu6MP6Tt0X0Klct8xlToutBk7Wh51RL9n7/QSplQnrUA1U3S5YzMng==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(defer type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/mailgo/0.12.2/mailgo.dark.min.js' integrity='sha512-I+Um09pzUsJIGHiF9fWPWXB7r3BJb2hyIH270A1Qk/KNQuSCiVlgDHYUleOI4o+di+1KlBTA8hMVWX2aKkYU4Q==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(defer type="text/javascript" src='z_js/proportional-image.min.js')
+  script(defer type="text/javascript" src='z_js/main.min.js')
+
+  //- Analytics
+  script(defer type="text/javascript" id="hs-script-loader" async src="https://js-na1.hs-scripts.com/40016037.js")
+  script(async='' src='https://www.googletagmanager.com/gtag/js?id=G-WSB34N8KJQ')
+  script.
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-WSB34N8KJQ');

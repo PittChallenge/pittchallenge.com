@@ -3057,6 +3057,10 @@ body.is-preload #header.alt .logo {
   }
 }
 
+* {
+  scroll-behavior: smooth;
+}
+
 #mlh-trust-badge {
   display: block;
   max-width: 100px;
