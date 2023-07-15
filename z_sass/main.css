@@ -2994,6 +2994,7 @@ body.is-preload #header.alt .logo {
   padding: 5em 5em 3em 5em;
   width: calc(100% + 2em);
   margin: 0 0 3em -2em;
+  justify-content: space-between;
 }
 #footer > * {
   margin-left: 2em;
@@ -3001,12 +3002,10 @@ body.is-preload #header.alt .logo {
 #footer .copyright {
   font-size: 0.8em;
   text-align: left;
-  float: left;
 }
 #footer .social {
   font-size: 0.8em;
   text-align: right;
-  float: right;
 }
 @media screen and (max-width: 1280px) {
   #footer {
