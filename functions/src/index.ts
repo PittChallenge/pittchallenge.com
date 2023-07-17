@@ -6,7 +6,8 @@ import {onRequest} from "firebase-functions/v2/https";
 import {defineString} from "firebase-functions/params";
 import * as logger from "firebase-functions/logger";
 
-initializeApp();
+const app = initializeApp();
+const db = getFirestore(app);
 
 export const addRegistrationEntry = onRequest({
     cors: true,
@@ -54,7 +55,6 @@ export const addRegistrationEntry = onRequest({
     }
 
     json.email = json.email.toLowerCase().trim();
-    const db = getFirestore();
     const promises = [
         db.collection("registrations_id").doc(json.id).set(json),
         db.collection("registrations_email").doc(json.email).set(json),
@@ -123,7 +123,6 @@ export const getCSV = onRequest({
 
     const collectionType = request.query.type === "id" ? "id" : "email";
     const collectionName = "registrations_" + collectionType;
-    const db = getFirestore();
     const registrations = db.collection(collectionName).get().then((snapshot) => {
         const registrations: any[] = [];
         snapshot.forEach((doc) => {
@@ -146,11 +145,11 @@ export const getCSV = onRequest({
     // generate the CSV
     Promise.all([registrations, headers]).then(([registrations, headers]) => {
         const csv = [
-            Array.from(headers).join(","),
+            Array.from(headers).join("~"),
             ...registrations.map((registration) => {
                 return Array.from(headers).map((header) => {
                     return registration[header] ?? "";
-                }).join(",");
+                }).join("~");
             }),
         ].join("\n");
 
