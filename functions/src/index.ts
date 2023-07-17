@@ -13,6 +13,7 @@ export const addRegistrationEntry = onRequest({
     timeoutSeconds: 60,
     cpu: 1,
     invoker: "public",
+    maxInstances: 5,
 }, (request, response) => {
     if (request.method !== "POST") {
         response.status(400).send("Invalid request");
@@ -52,6 +53,7 @@ export const addRegistrationEntry = onRequest({
         return;
     }
 
+    json.email = json.email.toLowerCase().trim();
     const db = getFirestore();
     const promises = [
         db.collection("registrations_id").doc(json.id).set(json),
@@ -76,9 +78,9 @@ export const addRegistrationEntry = onRequest({
 //     const promises = [];
 //     for (let i = 0; i < 20; i++) {
 //         const id = Math.floor(Math.random() * 1000000);
-//         const email = id + "@example.com";
+//         const randomName = Math.random().toString(36).substring(2, 15).toUpperCase();
+//         const email = randomName + "@example.com";
 //         const timestamp = new Date().toISOString();
-//         const randomName = Math.random().toString(36).substring(2, 15);
 //         let json: any = {
 //             id,
 //             email,
@@ -100,8 +102,8 @@ export const addRegistrationEntry = onRequest({
 export const getCSV = onRequest({
     cors: true,
     timeoutSeconds: 60,
-    cpu: 1,
     invoker: "public",
+    maxInstances: 1,
 }, (request, response) => {
     if (request.method !== "GET") {
         response.status(400).send("Invalid request");
@@ -160,3 +162,45 @@ export const getCSV = onRequest({
         response.status(500).send("Internal server error");
     });
 });
+
+// export const convertIDToEmail = onRequest({
+//     cors: true,
+//     timeoutSeconds: 60,
+//     invoker: "public",
+//     maxInstances: 1,
+// }, (request, response) => {
+//     const db = getFirestore();
+//
+//     //  delete "registrations_email" collection
+//     const deleteRegistrationsEmail = db.collection("registrations_email").listDocuments().then((documents) => {
+//         const promises = documents.map((document) => {
+//             return document.delete();
+//         });
+//         return Promise.all(promises).then(() => {});
+//     });
+//
+//     const registrations = db.collection("registrations_id").get().then((snapshot) => {
+//         const registrations: any[] = [];
+//         snapshot.forEach((doc) => {
+//             registrations.push(doc.data());
+//         });
+//         return registrations;
+//     });
+//
+//
+//     //  create "registrations_email" collection
+//     const createRegistrationsEmail = Promise.all([registrations, deleteRegistrationsEmail]).then(([registrations]) => {
+//         const promises = registrations.map((registration) => {
+//             registration.email = registration.email.toLowerCase().trim();
+//             return db.collection("registrations_email").doc(registration.email).set(registration);
+//         });
+//         return Promise.all(promises);
+//     });
+//
+//     createRegistrationsEmail.then(() => {
+//         response.status(200).send("OK");
+//     }).catch((error) => {
+//         logger.error(error);
+//         response.status(500).send("Internal server error");
+//     });
+// });
