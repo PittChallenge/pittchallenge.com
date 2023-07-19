@@ -17,18 +17,18 @@ export const addRegistrationEntry = onRequest({
     maxInstances: 5,
 }, (request, response) => {
     if (request.method !== "POST") {
-        response.status(400).send("Invalid request");
+        response.status(400).send("Invalid request #01");
         return;
     }
 
     if (request.body === undefined) {
-        response.status(400).send("Invalid request body");
+        response.status(400).send("Invalid request #02");
         return;
     }
 
     const contentType = request.get("content-type");
     if (contentType !== "application/json") {
-        response.status(400).send("Invalid content type");
+        response.status(400).send("Invalid request #03");
         return;
     }
 
@@ -41,16 +41,16 @@ export const addRegistrationEntry = onRequest({
     const json = request.body;
 
     if (json === undefined) {
-        response.status(400).send("Invalid request body");
+        response.status(400).send("Invalid request #04");
         return;
     }
     if (json.id === undefined) {
-        response.status(400).send("Invalid request body");
+        response.status(400).send("Invalid request #05");
         return;
     }
 
     if (json.email === undefined) {
-        response.status(400).send("Invalid request body");
+        response.status(400).send("Invalid request #06");
         return;
     }
 
@@ -64,7 +64,7 @@ export const addRegistrationEntry = onRequest({
         response.status(200).send("OK");
     }).catch((error) => {
         logger.error(error);
-        response.status(500).send("Internal server error #01");
+        response.status(500).send("Internal server error");
     });
 });
 
@@ -75,7 +75,7 @@ export const getCSV = onRequest({
     maxInstances: 1,
 }, (request, response) => {
     if (request.method !== "GET") {
-        response.status(400).send("Invalid request");
+        response.status(400).send("Invalid request #01");
         return;
     }
 
@@ -86,7 +86,7 @@ export const getCSV = onRequest({
     }
 
     if (request.query.type !== "id" && request.query.type !== "email") {
-        response.status(400).send("Invalid query parameter");
+        response.status(400).send("Invalid request #02");
         return;
     }
 
@@ -127,7 +127,7 @@ export const getCSV = onRequest({
         response.status(200).send(csv);
     }).catch((error) => {
         logger.error(error);
-        response.status(500).send("Internal server error #02");
+        response.status(500).send("Internal server error");
     });
 });
 
@@ -138,11 +138,11 @@ export const checkInToEvent = onRequest({
     invoker: "public",
     maxInstances: 5,
 }, (request, response) => {
-    if (request.method !== "POST") { response.status(400).send("Invalid request"); return; }
-    if (request.body === undefined) { response.status(400).send("Invalid request body"); return; }
-    if (request.get("content-type") !== "application/json") { response.status(400).send("Invalid content type"); return; }
-    if (request.body.email === undefined) { response.status(400).send("Invalid request body"); return; }
-    if (request.body.event === undefined) { response.status(400).send("Invalid request body"); return; }
+    if (request.method !== "POST") { response.status(400).send("Invalid request #01"); return; }
+    if (request.body === undefined) { response.status(400).send("Invalid request #02"); return; }
+    if (request.get("content-type") !== "application/json") { response.status(400).send("Invalid request #03"); return; }
+    if (request.body.email === undefined) { response.status(400).send("Invalid request #04"); return; }
+    if (request.body.event === undefined) { response.status(400).send("Invalid request #05"); return; }
 
     let email: string = request.body.email.toLowerCase().trim();
     const event: string = request.body.event.toLowerCase().trim();
@@ -159,9 +159,10 @@ export const checkInToEvent = onRequest({
         return;
     }
 
-    email = email.replace("+vedu@", "@");
-    if (event.length === 0) { response.status(400).send("INVALID_EVENT: invalid event"); return; }
-    if (event === "id") { response.status(400).send("INVALID_EVENT: invalid event"); return; }
+    const emailPrefix = defineString("EMAIL_PREFIX");
+    email = email.replace("+" + emailPrefix + "@", "@");
+    if (event.length === 0) { response.status(400).send("Invalid request #06"); return; }
+    if (event === "id") { response.status(400).send("Invalid request #07"); return; }
 
     db.collection("checkin_email").doc(email).get().then((doc) => {
         if (!doc.exists) return;
@@ -181,8 +182,8 @@ export const checkInToEvent = onRequest({
             if (!doc.exists) { response.status(200).send("NOT_REGISTERED: you are not registered"); return false; }
 
             const registration = doc.data();
-            if (registration === undefined) { response.status(500).send("Internal server error #03"); return false; }
-            if (registration.id === undefined) { response.status(500).send("Internal server error #04"); return false; }
+            if (registration === undefined) { response.status(500).send("Internal server error #01"); return false; }
+            if (registration.id === undefined) { response.status(500).send("Internal server error #02"); return false; }
             return String(registration.id);
         }).then((id) => {
             if (!id) return;
@@ -203,7 +204,7 @@ export const checkInToEvent = onRequest({
         });
     }).catch((error) => {
         logger.error(error);
-        response.status(500).send("Internal server error #05");
+        response.status(500).send("Internal server error #03");
     });
 });
 
@@ -235,7 +236,7 @@ export const checkInToEvent = onRequest({
 //         response.status(200).send("OK");
 //     }).catch((error) => {
 //         logger.error(error);
-//         response.status(500).send("Internal server error #05");
+//         response.status(500).send("Internal server error");
 //     });
 // });
 
@@ -277,6 +278,6 @@ export const checkInToEvent = onRequest({
 //         response.status(200).send("OK");
 //     }).catch((error) => {
 //         logger.error(error);
-//         response.status(500).send("Internal server error #06");
+//         response.status(500).send("Internal server error");
 //     });
 // });
