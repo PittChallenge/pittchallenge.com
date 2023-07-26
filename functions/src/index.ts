@@ -240,44 +240,44 @@ export const checkInToEvent = onRequest({
 //     });
 // });
 
-// export const convertIDToEmail = onRequest({
-//     cors: true,
-//     timeoutSeconds: 60,
-//     invoker: "public",
-//     maxInstances: 1,
-// }, (request, response) => {
-//     const db = getFirestore();
-//
-//     //  delete "registrations_email" collection
-//     const deleteRegistrationsEmail = db.collection("registrations_email").listDocuments().then((documents) => {
-//         const promises = documents.map((document) => {
-//             return document.delete();
-//         });
-//         return Promise.all(promises).then(() => {});
-//     });
-//
-//     const registrations = db.collection("registrations_id").get().then((snapshot) => {
-//         const registrations: any[] = [];
-//         snapshot.forEach((doc) => {
-//             registrations.push(doc.data());
-//         });
-//         return registrations;
-//     });
-//
-//
-//     //  create "registrations_email" collection
-//     const createRegistrationsEmail = Promise.all([registrations, deleteRegistrationsEmail]).then(([registrations]) => {
-//         const promises = registrations.map((registration) => {
-//             registration.email = registration.email.toLowerCase().trim();
-//             return db.collection("registrations_email").doc(registration.email).set(registration);
-//         });
-//         return Promise.all(promises);
-//     });
-//
-//     createRegistrationsEmail.then(() => {
-//         response.status(200).send("OK");
-//     }).catch((error) => {
-//         logger.error(error);
-//         response.status(500).send("Internal server error");
-//     });
-// });
+export const convertIDToEmail = onRequest({
+    cors: true,
+    timeoutSeconds: 60,
+    invoker: "public",
+    maxInstances: 1,
+}, (request, response) => {
+    const db = getFirestore();
+
+    //  delete "registrations_email" collection
+    const deleteRegistrationsEmail = db.collection("registrations_email").listDocuments().then((documents) => {
+        const promises = documents.map((document) => {
+            return document.delete();
+        });
+        return Promise.all(promises).then(() => {});
+    });
+
+    const registrations = db.collection("registrations_id").get().then((snapshot) => {
+        const registrations: any[] = [];
+        snapshot.forEach((doc) => {
+            registrations.push(doc.data());
+        });
+        return registrations;
+    });
+
+
+    //  create "registrations_email" collection
+    const createRegistrationsEmail = Promise.all([registrations, deleteRegistrationsEmail]).then(([registrations]) => {
+        const promises = registrations.map((registration) => {
+            registration.email = registration.email.toLowerCase().trim();
+            return db.collection("registrations_email").doc(registration.email).set(registration);
+        });
+        return Promise.all(promises);
+    });
+
+    createRegistrationsEmail.then(() => {
+        response.status(200).send("OK");
+    }).catch((error) => {
+        logger.error(error);
+        response.status(500).send("Internal server error");
+    });
+});
