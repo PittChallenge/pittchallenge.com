@@ -3007,37 +3007,6 @@ body.is-preload #header.alt .logo {
   font-size: 0.8em;
   text-align: right;
 }
-@media screen and (max-width: 1280px) {
-  #footer {
-    padding: 4em 4em 2em 4em;
-  }
-}
-@media screen and (max-width: 980px) {
-  #footer {
-    padding: 4em 3em 2em 3em;
-    display: block;
-    margin: 0 0 3em 0;
-    width: 100%;
-  }
-  #footer > * {
-    margin-left: 0;
-  }
-}
-@media screen and (max-width: 736px) {
-  #footer {
-    padding: 3em 2em 1em 2em;
-  }
-}
-@media screen and (max-width: 480px) {
-  #footer {
-    padding: 3em 1.5em 1em 1.5em;
-  }
-}
-@media screen and (max-width: 480px) {
-  #footer {
-    padding: 2.5em 1em 0.5em 1em;
-  }
-}
 
 /* Wrapper */
 #wrapper {
