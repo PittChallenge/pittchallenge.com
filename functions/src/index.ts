@@ -85,13 +85,19 @@ export const getCSV = onRequest({
         return;
     }
 
-    if (request.query.type !== "id" && request.query.type !== "email") {
+    if (request.query.type !== "registrations" && request.query.type !== "checkin") {
         response.status(400).send("Invalid request #02");
         return;
     }
 
-    const collectionType = request.query.type === "id" ? "id" : "email";
-    const collectionName = "registrations_" + collectionType;
+    if (request.query.of !== "id" && request.query.of !== "email") {
+        response.status(400).send("Invalid request #03");
+        return;
+    }
+
+    const collectionType = request.query.type === "registrations" ? "registrations" : "checkin";
+    const collectionOf = request.query.of === "id" ? "id" : "email";
+    const collectionName = collectionType + "_" + collectionOf;
     const registrations = db.collection(collectionName).get().then((snapshot) => {
         const registrations: any[] = [];
         snapshot.forEach((doc) => {
@@ -113,12 +119,11 @@ export const getCSV = onRequest({
 
     // generate the CSV
     Promise.all([registrations, headers]).then(([registrations, headers]) => {
+        const csvHeaders = Array.from(headers).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
         const csv = [
-            Array.from(headers).join("~"),
+            csvHeaders.join("~"),
             ...registrations.map((registration) => {
-                return Array.from(headers).map((header) => {
-                    return registration[header] ?? "";
-                }).join("~");
+                return csvHeaders.map((header) => registration[header] ?? "").join("~");
             }),
         ].join("\n");
 
@@ -266,6 +271,7 @@ export const checkInToEvent = onRequest({
             const toSet = {
                 [event]: timestamp,
                 id: id,
+                email: email,
             }
             return Promise.all([
                 db.collection("checkin_id").doc(id).set(toSet, {merge: true}),
