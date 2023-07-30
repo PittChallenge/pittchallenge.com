@@ -1,0 +1,37 @@
+doctype html
+include _global
+head
+    meta(charset='UTF-8')
+    title Check-In
+    meta(name='theme-color' content='#ffffff')
+    link(rel='stylesheet' href='z_sass/checkin.css')
+    link(rel='preload' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0' as="font" type="font/woff2" crossorigin)
+    link(rel='preload' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' as='style' onload="this.onload=null;this.rel='stylesheet'")
+body
+    form(id="checkInForm" action='javascript:void(0);' method='POST')
+        h2(id="eventName")
+        input(
+            id="email"
+            type='email'
+            name='email'
+            placeholder='Email'
+            title="Please enter your email address."
+            required
+        )
+        input(
+            id="newEmail"
+            type='email'
+            name='newEmail'
+            placeholder='Email (ending with .edu)'
+            title="Ending with .edu"
+            pattern=".*\.edu$"
+            style="display: none;"
+        )
+        button(type='submit') Check-In
+
+    section(id="result" style="transform: scale(0);")
+        div(id="resultIcon" class="fa")
+        h3(id="resultText")
+
+    //- Scripts
+    script(src='z_js/checkin.js')

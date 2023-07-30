@@ -1,0 +1,106 @@
+@import 'libs/vars';
+@import 'libs/functions';
+@import 'libs/mixins';
+@import 'libs/vendor';
+@import 'libs/breakpoints';
+@import 'libs/html-grid';
+
+// Breakpoints.
+
+@include breakpoints((
+        xlarge: (1281px, 1680px),
+        large: (981px, 1280px),
+        medium: (737px, 980px),
+        small: (481px, 736px),
+        xsmall: (361px, 480px),
+        xxsmall: (null, 360px)
+));
+
+// Mixins.
+
+@mixin color($p) {
+  @include color-typography($p);
+  @include color-box($p);
+  @include color-button($p);
+  @include color-form($p);
+  @include color-icon($p);
+  @include color-list($p);
+  @include color-section($p);
+  @include color-table($p);
+  @include color-spotlight($p);
+}
+
+// Base.
+
+@import 'base/reset';
+@import 'base/page';
+@import 'base/typography';
+
+// Component.
+
+@import 'components/row';
+@import 'components/box';
+@import 'components/button';
+@import 'components/form';
+@import 'components/icon';
+@import 'components/image';
+@import 'components/list';
+@import 'components/actions';
+@import 'components/icons';
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #000000;
+  background-image: none;
+  color: #ffffff;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+
+  &.neutral {
+    background-color: #000000;
+  }
+
+  &.ok {
+  background-color: #339900;
+  }
+
+  &.warning {
+    background-color: #ffba00;
+  }
+
+  &.error {
+    background-color: #ED4F32;
+  }
+
+  input {
+    min-width: 50vw;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    font-size: 1.5rem;
+  }
+  button {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    font-size: 1.5rem;
+  }
+}
+
+section#result {
+  transition: transform 1s ease-in-out;
+  font-size: 2rem;
+
+  #resultIcon {
+    font-size: 10rem;
+    margin-bottom: 12px;
+  }
+}
+
+form {
+  margin: 0;
+}
