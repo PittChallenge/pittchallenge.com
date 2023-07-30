@@ -32,8 +32,8 @@ export const addRegistrationEntry = onRequest({
         return;
     }
 
-    const writeApiKey = defineString("WRITE_API_KEY");
-    if (request.query.key !== writeApiKey.value()) {
+    const writeApiKey = defineString("WRITE_API_KEY").value();
+    if (request.query.key !== writeApiKey) {
         response.status(401).send("Unauthorized");
         return;
     }
@@ -79,8 +79,8 @@ export const getCSV = onRequest({
         return;
     }
 
-    const readApiKey = defineString("READ_API_KEY");
-    if (request.query.key !== readApiKey.value()) {
+    const readApiKey = defineString("READ_API_KEY").value();
+    if (request.query.key !== readApiKey) {
         response.status(401).send("Unauthorized");
         return;
     }
@@ -212,12 +212,13 @@ export const checkInToEvent = onRequest({
     const responseMessage = {
         email: email,
         event: event,
+        icon: "",
         id: "null",
         timestamp: "null",
         alreadyCheckedIn: false,
     };
 
-    const emailPrefix = defineString("EMAIL_PREFIX");
+    const emailPrefix = defineString("EMAIL_PREFIX").value();
     if (!(email.endsWith(".edu") || email.indexOf("+" + emailPrefix + "@") > 0)) {
         response.status(200).send("CHANGE_EMAIL: change your email to a .edu email");
         return;
@@ -228,7 +229,16 @@ export const checkInToEvent = onRequest({
     if (event.length === 0) { response.status(400).send("Invalid request #06"); return; }
     if (event === "id") { response.status(400).send("Invalid request #07"); return; }
 
-    db.collection("checkin_email").doc(email).get().then((doc) => {
+    db.collection("extra").doc("icons").get().then((doc) => {
+        if (!doc.exists) return;
+        const data = doc.data();
+        if (!data) return;
+        if (!data[event]) return;
+
+        responseMessage.icon = data[event];
+    }).then(() => {
+        return db.collection("checkin_email").doc(email).get();
+    }).then((doc) => {
         if (!doc.exists) return;
         const data = doc.data();
         if (!data) return;
