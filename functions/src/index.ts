@@ -217,12 +217,12 @@ export const checkInToEvent = onRequest({
         alreadyCheckedIn: false,
     };
 
-    if (!(email.endsWith(".edu") || email.indexOf("+vedu@") > 0)) {
+    const emailPrefix = defineString("EMAIL_PREFIX");
+    if (!(email.endsWith(".edu") || email.indexOf("+" + emailPrefix + "@") > 0)) {
         response.status(200).send("CHANGE_EMAIL: change your email to a .edu email");
         return;
     }
 
-    const emailPrefix = defineString("EMAIL_PREFIX");
     email = email.replace("+" + emailPrefix + "@", "@");
 
     if (event.length === 0) { response.status(400).send("Invalid request #06"); return; }
