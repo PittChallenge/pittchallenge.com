@@ -253,7 +253,7 @@ export const checkInToEvent = onRequest({
         if (completed) return;
 
         return db.collection("registrations_email").doc(email).get().then((doc) => {
-            if (!doc.exists) { response.status(200).send("NOT_REGISTERED: you are not registered"); return false; }
+            if (!doc.exists) { response.status(400).send("NOT_REGISTERED: you are not registered"); return false; }
 
             const registration = doc.data();
             if (registration === undefined) { response.status(500).send("Internal server error #01"); return false; }
