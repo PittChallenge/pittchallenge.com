@@ -131,6 +131,69 @@ export const getCSV = onRequest({
     });
 });
 
+export const changeEmail = onRequest({
+    cors: true,
+    timeoutSeconds: 60,
+    cpu: 1,
+    invoker: "public",
+    maxInstances: 5,
+}, (request, response) => {
+    if (request.method !== "POST") { response.status(400).send("Invalid request #01"); return; }
+    if (request.body === undefined) { response.status(400).send("Invalid request #02"); return; }
+    if (request.get("content-type") !== "application/json") { response.status(400).send("Invalid request #03"); return; }
+    if (request.body.email === undefined) { response.status(400).send("Invalid request #04"); return; }
+    if (request.body.newEmail === undefined) { response.status(400).send("Invalid request #05"); return; }
+
+    const email: string = request.body.email.toLowerCase().trim();
+    const newEmail: string = request.body.newEmail.toLowerCase().trim();
+
+    if (!newEmail.endsWith(".edu")) { response.status(400).send("Invalid request #06"); return; }
+
+    db.collection("registrations_email").doc(email).get().then((doc) => {
+        if (!doc.exists) {
+            response.status(404).send("Email not found");
+            return;
+        }
+        return doc.data()?.id as string;
+    }).then((id) => {
+        if (id === undefined) {
+            response.status(500).send("Internal server error #01");
+            return;
+        }
+        return db.collection("registrations_id").doc(String(id)).get();
+    }).then((doc) => {
+        if (doc === undefined) {
+            response.status(500).send("Internal server error #02");
+            return;
+        }
+        if (!doc.exists) {
+            response.status(500).send("Internal server error #03");
+            return;
+        }
+        const data = doc.data();
+        if (data === undefined) {
+            response.status(500).send("Internal server error #04");
+            return;
+        }
+        data.email = newEmail;
+        if (data.originalEmail === undefined) {
+            data.originalEmail = [email];
+        } else {
+            data.originalEmail.push(email);
+        }
+        return Promise.all([
+            db.collection("registrations_id").doc(String(data.id)).set(data, { merge: true }),
+            db.collection("registrations_email").doc(email).delete(),
+            db.collection("registrations_email").doc(newEmail).set(data),
+        ]);
+    }).then(() => {
+        response.status(200).send("OK");
+    }).catch((error) => {
+        logger.error(error);
+        response.status(500).send("Internal server error #06");
+    });
+});
+
 export const checkInToEvent = onRequest({
     cors: true,
     timeoutSeconds: 60,
@@ -161,6 +224,7 @@ export const checkInToEvent = onRequest({
 
     const emailPrefix = defineString("EMAIL_PREFIX");
     email = email.replace("+" + emailPrefix + "@", "@");
+
     if (event.length === 0) { response.status(400).send("Invalid request #06"); return; }
     if (event === "id") { response.status(400).send("Invalid request #07"); return; }
 
