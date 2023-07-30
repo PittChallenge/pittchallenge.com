@@ -320,8 +320,6 @@ export const convertIDToEmail = onRequest({
     invoker: "public",
     maxInstances: 1,
 }, (request, response) => {
-    const db = getFirestore();
-
     //  delete "registrations_email" collection
     const deleteRegistrationsEmail = db.collection("registrations_email").listDocuments().then((documents) => {
         const promises = documents.map((document) => {
@@ -341,7 +339,26 @@ export const convertIDToEmail = onRequest({
 
     //  create "registrations_email" collection
     const createRegistrationsEmail = Promise.all([registrations, deleteRegistrationsEmail]).then(([registrations]) => {
-        const promises = registrations.map((registration) => {
+        // sort by timestamp
+        registrations.sort((a, b) => {
+            // format: 2023-07-25 22:17:06
+            if (a.EndDate === undefined) return -1;
+            if (b.EndDate === undefined) return +1;
+
+            const aTimestamp = String(a.EndDate).replace(/-/g, "").replace(/:/g, "").replace(/ /g, "");
+            const bTimestamp = String(b.EndDate).replace(/-/g, "").replace(/:/g, "").replace(/ /g, "");
+            return Number(aTimestamp) - Number(bTimestamp);
+        });
+
+    //     newer registrations overwrite older registrations
+        const emailToRegistration: any = {};
+        registrations.forEach((registration) => {
+            if (registration.email === undefined) return;
+            emailToRegistration[registration.email] = registration;
+        });
+
+        const promises = Object.keys(emailToRegistration).map((email) => {
+            const registration = emailToRegistration[email];
             registration.email = registration.email.toLowerCase().trim();
             return db.collection("registrations_email").doc(registration.email).set(registration);
         });
