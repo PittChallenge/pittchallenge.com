@@ -264,6 +264,9 @@ export const convertIDToEmail = onRequest({
     invoker: "public",
     maxInstances: 1,
 }, (request, response) => {
+    const writeApiKey = defineString("WRITE_API_KEY").value();
+    if (request.query.key !== writeApiKey) { response.status(401).send("Unauthorized"); return; }
+
     //  delete "registrations_email" collection
     const deleteRegistrationsEmail = db.collection("registrations_email").listDocuments().then((documents) => {
         const promises = documents.map((document) => document.delete());
