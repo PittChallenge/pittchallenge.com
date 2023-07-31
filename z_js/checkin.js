@@ -25,10 +25,11 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 
 window.addEventListener('load', function() {
+    const changeEmailUrl = "";
+    const checkInUrl = "";
+
     document.getElementById("checkInForm").addEventListener("submit", function(e) {
         e.preventDefault();
-        const changeEmailUrl = "";
-        const checkInUrl = "";
         const eventName = new URLSearchParams(window.location.search).get("eventName");
         const email = document.getElementById("email").value;
         const newEmail = document.getElementById("newEmail").value;
@@ -84,22 +85,16 @@ window.addEventListener('load', function() {
         }).then(function(results) {
             const response = results[0];
             const text = results[1];
-            console.log(response.status, text);
 
+            console.log(response.status, text);
             if (response.status !== 200) throw new Error(text);
 
-            try {
-                const json = JSON.parse(text);
-                const icon = json.icon || "fa-check";
-                document.getElementById("resultIcon").classList = "fa " + icon;
-            } catch (e) {
-                document.getElementById("resultIcon").classList = "fa fa-check";
-            }
+            const json = JSON.parse(text);
+            console.log(response.status, json);
+            document.getElementById("resultIcon").classList = "fa " + json.icon;
             document.getElementById("resultText").innerHTML += "Successfully checked in";
             window.localStorage.setItem("email", newEmail || email);
-        });
-
-        startingPromise = startingPromise.then(function() {
+        }).then(function() {
             document.body.classList.add("ok");
             document.getElementById("checkInForm").style.display = "none";
 
