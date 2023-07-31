@@ -16,51 +16,25 @@ export const addRegistrationEntry = onRequest({
     invoker: "public",
     maxInstances: 5,
 }, (request, response) => {
-    if (request.method !== "POST") {
-        response.status(400).send("Invalid request #01");
-        return;
-    }
-
-    if (request.body === undefined) {
-        response.status(400).send("Invalid request #02");
-        return;
-    }
+    if (request.method !== "POST") { response.status(400).send("Invalid request #01"); return; }
+    if (request.body === undefined) { response.status(400).send("Invalid request #02"); return; }
 
     const contentType = request.get("content-type");
-    if (contentType !== "application/json") {
-        response.status(400).send("Invalid request #03");
-        return;
-    }
+    if (contentType !== "application/json") { response.status(400).send("Invalid request #03"); return; }
 
     const writeApiKey = defineString("WRITE_API_KEY").value();
-    if (request.query.key !== writeApiKey) {
-        response.status(401).send("Unauthorized");
-        return;
-    }
+    if (request.query.key !== writeApiKey) { response.status(401).send("Unauthorized"); return; }
 
     const json = request.body;
-
-    if (json === undefined) {
-        response.status(400).send("Invalid request #04");
-        return;
-    }
-    if (json.id === undefined) {
-        response.status(400).send("Invalid request #05");
-        return;
-    }
-
-    if (json.email === undefined) {
-        response.status(400).send("Invalid request #06");
-        return;
-    }
+    if (json === undefined) { response.status(400).send("Invalid request #04"); return; }
+    if (json.id === undefined) { response.status(400).send("Invalid request #05"); return; }
+    if (json.email === undefined) { response.status(400).send("Invalid request #06"); return; }
 
     json.email = json.email.toLowerCase().trim();
-    const promises = [
+    return Promise.all([
         db.collection("registrations_id").doc(json.id).set(json),
         db.collection("registrations_email").doc(json.email).set(json),
-    ];
-
-    Promise.all(promises).then(() => {
+    ]).then(() => {
         response.status(200).send("OK");
     }).catch((error) => {
         logger.error(error);
@@ -74,35 +48,19 @@ export const getCSV = onRequest({
     invoker: "public",
     maxInstances: 1,
 }, (request, response) => {
-    if (request.method !== "GET") {
-        response.status(400).send("Invalid request #01");
-        return;
-    }
+    if (request.method !== "GET") { response.status(400).send("Invalid request #01"); return; }
 
     const readApiKey = defineString("READ_API_KEY").value();
-    if (request.query.key !== readApiKey) {
-        response.status(401).send("Unauthorized");
-        return;
-    }
-
-    if (request.query.type !== "registrations" && request.query.type !== "checkin") {
-        response.status(400).send("Invalid request #02");
-        return;
-    }
-
-    if (request.query.of !== "id" && request.query.of !== "email") {
-        response.status(400).send("Invalid request #03");
-        return;
-    }
+    if (request.query.key !== readApiKey) { response.status(401).send("Unauthorized"); return; }
+    if (request.query.type !== "registrations" && request.query.type !== "checkin") { response.status(400).send("Invalid request #02"); return; }
+    if (request.query.of !== "id" && request.query.of !== "email") { response.status(400).send("Invalid request #03"); return; }
 
     const collectionType = request.query.type === "registrations" ? "registrations" : "checkin";
     const collectionOf = request.query.of === "id" ? "id" : "email";
     const collectionName = collectionType + "_" + collectionOf;
     const registrations = db.collection(collectionName).get().then((snapshot) => {
         const registrations: any[] = [];
-        snapshot.forEach((doc) => {
-            registrations.push(doc.data());
-        });
+        snapshot.forEach((doc) => registrations.push(doc.data()));
         return registrations;
     });
 
@@ -114,16 +72,17 @@ export const getCSV = onRequest({
                 headers.add(key);
             });
         });
-        return headers;
+        const headersArray = Array.from(headers);
+        const sortFn = (a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase());
+        return headersArray.sort(sortFn);
     });
 
     // generate the CSV
-    Promise.all([registrations, headers]).then(([registrations, headers]) => {
-        const csvHeaders = Array.from(headers).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+    return Promise.all([registrations, headers]).then(([registrations, headers]) => {
         const csv = [
-            csvHeaders.join("~"),
+            headers.join("~"),
             ...registrations.map((registration) => {
-                return csvHeaders.map((header) => registration[header] ?? "").join("~");
+                return headers.map((header) => registration[header] ?? "").join("~");
             }),
         ].join("\n");
 
@@ -154,38 +113,24 @@ export const changeEmail = onRequest({
 
     if (!newEmail.endsWith(".edu")) { response.status(400).send("Invalid request #06"); return; }
 
-    db.collection("registrations_email").doc(email).get().then((doc) => {
-        if (!doc.exists) {
-            response.status(404).send("Email not found");
-            return;
-        }
+    return db.collection("registrations_email").doc(email).get().then((doc) => {
+        if (!doc.exists) { response.status(404).send("Email not found"); return Promise.reject(); }
         return doc.data()?.id as string;
-    }).then((id) => {
-        if (id === undefined) {
-            response.status(500).send("Internal server error #01");
-            return;
-        }
-        return db.collection("registrations_id").doc(String(id)).get();
-    }).then((doc) => {
-        if (doc === undefined) {
-            response.status(500).send("Internal server error #02");
-            return;
-        }
-        if (!doc.exists) {
-            response.status(500).send("Internal server error #03");
-            return;
-        }
+    }).then(
+        id => db.collection("registrations_id").doc(String(id)).get()
+    ).then((doc) => {
+        if (!doc.exists) { response.status(500).send("Internal server error #03"); return Promise.reject(); }
+
         const data = doc.data();
-        if (data === undefined) {
-            response.status(500).send("Internal server error #04");
-            return;
-        }
+        if (data === undefined) { response.status(500).send("Internal server error #04"); return Promise.reject(); }
+
         data.email = newEmail;
         if (data.originalEmail === undefined) {
             data.originalEmail = [email];
         } else {
             data.originalEmail.push(email);
         }
+
         return Promise.all([
             db.collection("registrations_id").doc(String(data.id)).set(data, { merge: true }),
             db.collection("registrations_email").doc(email).delete(),
@@ -233,15 +178,15 @@ export const checkInToEvent = onRequest({
 
     if (event.length === 0) { response.status(400).send("Invalid request #06"); return; }
     if (event === "id") { response.status(400).send("Invalid request #07"); return; }
+    if (event === "email") { response.status(400).send("Invalid request #08"); return; }
 
-    db.collection("extra").doc("icons").get().then((doc) => {
-        if (!doc.exists) return;
+    return db.collection("extra").doc("icons").get().then((doc) => {
+        if (!doc.exists) { response.status(500).send("Internal server error #01"); return Promise.reject(); }
         const data = doc.data();
-        if (!data) return;
-        if (!data[event]) return;
+        if (!data) { response.status(500).send("Internal server error #02"); return Promise.reject(); }
+        if (!data[event]) { response.status(400).send("Event not found"); return Promise.reject(); }
 
         responseMessage.icon = data[event];
-    }).then(() => {
         return db.collection("checkin_email").doc(email).get();
     }).then((doc) => {
         if (!doc.exists) return;
@@ -253,39 +198,32 @@ export const checkInToEvent = onRequest({
         responseMessage.timestamp = data[event];
         responseMessage.alreadyCheckedIn = true;
         response.status(200).send(responseMessage);
-        return true;
-    }).then((completed) => {
-        if (completed) return;
+        return Promise.reject();
+    }).then(
+        () => db.collection("registrations_email").doc(email).get()
+    ).then((doc) => {
+        if (!doc.exists) { response.status(400).send("NOT_REGISTERED: you are not registered"); return Promise.reject(); }
 
-        return db.collection("registrations_email").doc(email).get().then((doc) => {
-            if (!doc.exists) { response.status(400).send("NOT_REGISTERED: you are not registered"); return false; }
-
-            const registration = doc.data();
-            if (registration === undefined) { response.status(500).send("Internal server error #01"); return false; }
-            if (registration.id === undefined) { response.status(500).send("Internal server error #02"); return false; }
-            return String(registration.id);
-        }).then((id) => {
-            if (!id) return;
-
-            const timestamp = new Date().toISOString();
-            const toSet = {
-                [event]: timestamp,
-                id: id,
-                email: email,
-            }
-            return Promise.all([
-                db.collection("checkin_id").doc(id).set(toSet, {merge: true}),
-                db.collection("checkin_email").doc(email).set(toSet, {merge: true}),
-            ]).then(() => {
-                responseMessage.timestamp = timestamp;
-                responseMessage.id = id;
-                response.status(200).send(responseMessage);
-            });
+        const registration = doc.data();
+        if (registration === undefined) { response.status(500).send("Internal server error #03"); return Promise.reject(); }
+        if (registration.id === undefined) { response.status(500).send("Internal server error #04"); return Promise.reject(); }
+        return String(registration.id);
+    }).then((id) => {
+        const timestamp = new Date().toISOString();
+        const toSet = {
+            [event]: timestamp,
+            id: id,
+            email: email,
+        }
+        return Promise.all([
+            db.collection("checkin_id").doc(id).set(toSet, {merge: true}),
+            db.collection("checkin_email").doc(email).set(toSet, {merge: true}),
+        ]).then(() => {
+            responseMessage.timestamp = timestamp;
+            responseMessage.id = id;
+            response.status(200).send(responseMessage);
         });
-    }).catch((error) => {
-        logger.error(error);
-        response.status(500).send("Internal server error #03");
-    });
+    }).catch(() => {});
 });
 
 // export const fillRandomData = onRequest({
@@ -312,7 +250,7 @@ export const checkInToEvent = onRequest({
 //         promises.push(db.collection("registrations_email").doc(email).set(json));
 //     }
 //
-//     Promise.all(promises).then(() => {
+//     return Promise.all(promises).then(() => {
 //         response.status(200).send("OK");
 //     }).catch((error) => {
 //         logger.error(error);
@@ -328,35 +266,26 @@ export const convertIDToEmail = onRequest({
 }, (request, response) => {
     //  delete "registrations_email" collection
     const deleteRegistrationsEmail = db.collection("registrations_email").listDocuments().then((documents) => {
-        const promises = documents.map((document) => {
-            return document.delete();
-        });
+        const promises = documents.map((document) => document.delete());
         return Promise.all(promises).then(() => {});
     });
 
     const registrations = db.collection("registrations_id").get().then((snapshot) => {
         const registrations: any[] = [];
-        snapshot.forEach((doc) => {
-            registrations.push(doc.data());
-        });
+        snapshot.forEach((doc) => registrations.push(doc.data()));
         return registrations;
     });
 
-
-    //  create "registrations_email" collection
-    const createRegistrationsEmail = Promise.all([registrations, deleteRegistrationsEmail]).then(([registrations]) => {
-        // sort by timestamp
+    return Promise.all([registrations, deleteRegistrationsEmail]).then(([registrations]) => {
         registrations.sort((a, b) => {
-            // format: 2023-07-25 22:17:06
-            if (a.EndDate === undefined) return -1;
-            if (b.EndDate === undefined) return +1;
+            if (!a.EndDate) return -1;
+            if (!b.EndDate) return +1;
 
             const aTimestamp = String(a.EndDate).replace(/-/g, "").replace(/:/g, "").replace(/ /g, "");
             const bTimestamp = String(b.EndDate).replace(/-/g, "").replace(/:/g, "").replace(/ /g, "");
             return Number(aTimestamp) - Number(bTimestamp);
         });
 
-    //     newer registrations overwrite older registrations
         const emailToRegistration: any = {};
         registrations.forEach((registration) => {
             if (registration.email === undefined) return;
@@ -369,9 +298,7 @@ export const convertIDToEmail = onRequest({
             return db.collection("registrations_email").doc(registration.email).set(registration);
         });
         return Promise.all(promises);
-    });
-
-    createRegistrationsEmail.then(() => {
+    }).then(() => {
         response.status(200).send("OK");
     }).catch((error) => {
         logger.error(error);
