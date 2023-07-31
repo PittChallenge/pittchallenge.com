@@ -8,7 +8,7 @@ function camelCaseToTitleCase(string) {
 window.addEventListener('DOMContentLoaded', function() {
     const eventName = new URLSearchParams(window.location.search).get("eventName");
     if (eventName) {
-        document.getElementById("eventName").innerHTML = camelCaseToTitleCase(eventName);
+        document.getElementById("eventName").innerHTML = camelCaseToTitleCase(eventName.substring(6));
     } else {
         document.body.classList.add("error");
         document.getElementById("checkInForm").style.display = "none";
