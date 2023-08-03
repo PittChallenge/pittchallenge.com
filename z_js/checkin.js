@@ -25,8 +25,7 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 
 window.addEventListener('load', function() {
-    const changeEmailUrl = "";
-    const checkInUrl = "";
+    const proxyURL = "https://firebase-proxy-pittchallenge.shahvivswan.workers.dev/";
 
     document.getElementById("checkInForm").addEventListener("submit", function(e) {
         e.preventDefault();
@@ -45,7 +44,9 @@ window.addEventListener('load', function() {
         let startingPromise = new Promise(function(resolve, reject) { resolve(); });
         if (newEmail) {
             startingPromise = startingPromise.then(function() {
-                return fetch(changeEmailUrl, {
+                const changeEmailURL = proxyURL + "?proxyOf=change_email";
+                console.log("Changing email", email, newEmail, changeEmailURL);
+                return fetch(changeEmailURL, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -70,7 +71,9 @@ window.addEventListener('load', function() {
         }
 
         startingPromise = startingPromise.then(function() {
-            return fetch(checkInUrl, {
+            const checkInURL = proxyURL + "?proxyOf=check_in";
+            console.log("Checking in", eventName, email, checkInURL);
+            return fetch(checkInURL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
