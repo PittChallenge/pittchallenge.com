@@ -158,7 +158,7 @@ export const checkInToEvent = onRequest({
     if (request.body.event === undefined) { response.status(400).send("Invalid request #05"); return; }
 
     let email: string = request.body.email.toLowerCase().trim();
-    const event: string = request.body.event.toLowerCase().trim();
+    const event: string = request.body.event.trim();
     const responseMessage = {
         email: email,
         event: event,
