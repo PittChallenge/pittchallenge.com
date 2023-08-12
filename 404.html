@@ -35,6 +35,21 @@
     <meta name="msapplication-config" content="z_favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
   </head>
+  <script>
+    const redirectURLs = {
+        "CheckIn": "/checkin",
+        "Devpost": "https://pittchallenge2023.devpost.com",
+        "TeamRegistration": null,
+        "MentorHelp": null,
+        "Judging": null,
+        "ChatGPT": null,
+        "ChatGPT-Submission": null,
+    };
+    const path = window.location.pathname.toLowerCase().substring(1);
+    for (const key in redirectURLs) { redirectURLs[key.toLowerCase()] = redirectURLs[key]; }
+    if (redirectURLs[path]) { window.location.replace(redirectURLs[path] + window.location.search); }
+    
+  </script>
   <style>
     body {
         min-height: 100vh;
@@ -62,9 +77,4 @@
       </header>
     </div>
   </body>
-  <script>
-    let url = window.location.href;
-    let domainName = window.location.hostname;
-    console.log(domainName);
-  </script>
 </html>
