@@ -1,0 +1,40 @@
+doctype html
+html
+    include _global
+    include z_index_src/head
+
+    style.
+        body {
+            min-height: 100vh;
+            min-width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+    body
+        #wrapper
+            header#header.alt
+                span.logo
+                    img(src='z_images/pitt-challenge.svg' alt='' width='20%' height='20%' loading="lazy")
+
+                h1 404 Not Found
+                h2 Oops! Looks like you&apos;re lost. This page doesn&apos;t exist.
+                h2
+                    | Click&nbsp;
+                    a(href='/' style="text-decoration:underline") here
+                    |  to go back to the home page.
+
+    script.
+        let url = window.location.href;
+        let domainName = window.location.hostname;
+        console.log(domainName);
+
