@@ -177,8 +177,6 @@ export const checkInToEvent = onRequest({
     email = email.replace("+" + emailPrefix + "@", "@");
 
     if (event.length === 0) { response.status(400).send("Invalid request #06"); return; }
-    if (event === "id") { response.status(400).send("Invalid request #07"); return; }
-    if (event === "email") { response.status(400).send("Invalid request #08"); return; }
 
     return db.collection("extra").doc("icons").get().then((doc) => {
         if (!doc.exists) { response.status(500).send("Internal server error #01"); return Promise.reject(); }
@@ -207,13 +205,16 @@ export const checkInToEvent = onRequest({
         const registration = doc.data();
         if (registration === undefined) { response.status(500).send("Internal server error #03"); return Promise.reject(); }
         if (registration.id === undefined) { response.status(500).send("Internal server error #04"); return Promise.reject(); }
-        return String(registration.id);
-    }).then((id) => {
+        return [String(registration.id), String(registration.firstName)];
+    }).then((data) => {
+        const id = data[0];
+        const name = data[1];
         const timestamp = new Date().toISOString();
         const toSet = {
             [event]: timestamp,
             id: id,
             email: email,
+            name: name,
         }
         return Promise.all([
             db.collection("checkin_id").doc(id).set(toSet, {merge: true}),
@@ -300,6 +301,70 @@ export const convertIDToEmail = onRequest({
             registration.email = registration.email.toLowerCase().trim();
             return db.collection("registrations_email").doc(registration.email).set(registration);
         });
+        return Promise.all(promises);
+    }).then(() => {
+        response.status(200).send("OK");
+    }).catch((error) => {
+        logger.error(error);
+        response.status(500).send("Internal server error");
+    });
+});
+
+export const sendCheckinEmail = onRequest({
+    cors: true,
+    timeoutSeconds: 60,
+    invoker: "public",
+    maxInstances: 1,
+}, (request, response) => {
+    const writeApiKey = defineString("WRITE_API_KEY").value();
+    if (request.query.key !== writeApiKey) { response.status(401).send("Unauthorized"); return; }
+
+    const timestamp = new Date().toISOString();
+
+    return db.collection("checkin_id").get().then((snapshot) => {
+        const data: any[] = [];
+        snapshot.forEach((doc) => data.push(doc.data()));
+        return data;
+    }).then((data) => {
+        const promises: Promise<any>[] = [];
+
+        const CHECKIN_TAG = defineString("CHECKIN_TAG").value();
+        const CHECKIN_EMAIL_LINK = defineString("CHECKIN_EMAIL_LINK").value();
+        const CHECKIN_EMAIL_API_NAME = defineString("CHECKIN_EMAIL_API_NAME").value();
+        const CHECKIN_EMAIL_API_KEY = defineString("CHECKIN_EMAIL_API_KEY").value();
+
+        data.forEach((registration) => {
+            if (!registration[CHECKIN_TAG]) return;
+            if (registration["CHECKIN_EMAIL_SENT"]) return;
+
+            const email = registration.email;
+            const name = registration.name;
+
+            const emailRequest = fetch(CHECKIN_EMAIL_LINK, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    [CHECKIN_EMAIL_API_NAME]: CHECKIN_EMAIL_API_KEY,
+                },
+                body: JSON.stringify({
+                    email,
+                    name,
+                }),
+            });
+
+            const updateRequestID = db.collection("checkin_id").doc(registration.id).set({
+                CHECKIN_EMAIL_SENT: timestamp,
+            }, {merge: true});
+
+            const updateRequestEmail = db.collection("checkin_email").doc(email).set({
+                CHECKIN_EMAIL_SENT: timestamp,
+            }, {merge: true});
+
+            promises.push(emailRequest);
+            promises.push(updateRequestID);
+            promises.push(updateRequestEmail);
+        });
+
         return Promise.all(promises);
     }).then(() => {
         response.status(200).send("OK");
