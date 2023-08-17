@@ -3025,6 +3025,11 @@ body.is-preload #header.alt .logo {
   }
 }
 
+body {
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
 * {
   scroll-behavior: smooth;
 }
