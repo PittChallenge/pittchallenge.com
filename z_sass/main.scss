@@ -61,6 +61,12 @@
 @import 'layout/footer';
 @import 'layout/wrapper';
 
+
+body {
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
 * {
   scroll-behavior: smooth;
 }
