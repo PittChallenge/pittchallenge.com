@@ -3026,7 +3026,7 @@ body.is-preload #header.alt .logo {
 }
 
 body {
-  min-width: 100vw;
+  min-width: 100%;
   min-height: 100vh;
 }
 

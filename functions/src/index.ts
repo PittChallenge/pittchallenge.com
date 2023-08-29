@@ -1,5 +1,6 @@
 // See a full list of supported triggers at https://firebase.google.com/docs/functions
 
+import {timingSafeEqual} from "crypto";
 import {initializeApp} from "firebase-admin/app";
 import {getFirestore} from "firebase-admin/firestore";
 import {onRequest} from "firebase-functions/v2/https";
@@ -8,6 +9,24 @@ import * as logger from "firebase-functions/logger";
 
 const app = initializeApp();
 const db = getFirestore(app);
+
+function checkReadKey(key: string | undefined): boolean {
+    if (!key) return false;
+
+    const enc = new TextEncoder();
+    const writeApiKey = enc.encode(defineString("READ_API_KEY").value());
+    const userApiKey = enc.encode(String(key));
+    return timingSafeEqual(userApiKey, writeApiKey);
+}
+
+function checkWriteKey(key: string | undefined): boolean {
+    if (!key) return false;
+
+    const enc = new TextEncoder();
+    const writeApiKey = enc.encode(defineString("WRITE_API_KEY").value());
+    const userApiKey = enc.encode(String(key));
+    return timingSafeEqual(userApiKey, writeApiKey);
+}
 
 export const addRegistrationEntry = onRequest({
     cors: true,
@@ -22,8 +41,7 @@ export const addRegistrationEntry = onRequest({
     const contentType = request.get("content-type");
     if (contentType !== "application/json") { response.status(400).send("Invalid request #03"); return; }
 
-    const writeApiKey = defineString("WRITE_API_KEY").value();
-    if (request.query.key !== writeApiKey) { response.status(401).send("Unauthorized"); return; }
+    if (!checkWriteKey(String(request.query.key))) { response.status(401).send("Unauthorized"); return; }
 
     const json = request.body;
     if (json === undefined) { response.status(400).send("Invalid request #04"); return; }
@@ -50,8 +68,7 @@ export const getCSV = onRequest({
 }, (request, response) => {
     if (request.method !== "GET") { response.status(400).send("Invalid request #01"); return; }
 
-    const readApiKey = defineString("READ_API_KEY").value();
-    if (request.query.key !== readApiKey) { response.status(401).send("Unauthorized"); return; }
+    if (!checkReadKey(String(request.query.key))) { response.status(401).send("Unauthorized"); return; }
     if (request.query.type !== "registrations" && request.query.type !== "checkin") { response.status(400).send("Invalid request #02"); return; }
     if (request.query.of !== "id" && request.query.of !== "email") { response.status(400).send("Invalid request #03"); return; }
 
@@ -265,8 +282,7 @@ export const convertIDToEmail = onRequest({
     invoker: "public",
     maxInstances: 1,
 }, (request, response) => {
-    const writeApiKey = defineString("WRITE_API_KEY").value();
-    if (request.query.key !== writeApiKey) { response.status(401).send("Unauthorized"); return; }
+    if (!checkWriteKey(String(request.query.key))) { response.status(401).send("Unauthorized"); return; }
 
     //  delete "registrations_email" collection
     const deleteRegistrationsEmail = db.collection("registrations_email").listDocuments().then((documents) => {
@@ -310,14 +326,14 @@ export const convertIDToEmail = onRequest({
     });
 });
 
+
 export const sendCheckinEmail = onRequest({
     cors: true,
     timeoutSeconds: 60,
     invoker: "public",
     maxInstances: 1,
 }, (request, response) => {
-    const writeApiKey = defineString("WRITE_API_KEY").value();
-    if (request.query.key !== writeApiKey) { response.status(401).send("Unauthorized"); return; }
+    if (!checkWriteKey(String(request.query.key))) { response.status(401).send("Unauthorized"); return; }
 
     const timestamp = new Date().toISOString();
 
