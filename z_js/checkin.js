@@ -95,7 +95,7 @@ window.addEventListener('load', function() {
             const json = JSON.parse(text);
             console.log(response.status, json);
             document.getElementById("resultIcon").classList = "fa " + json.icon;
-            document.getElementById("resultText").innerHTML += "Successfully checked in";
+            document.getElementById("resultText").innerHTML += "Successfully checked in<br>" + json.id + "<br>" + json.email;
             window.localStorage.setItem("email", newEmail || email);
         }).then(function() {
             document.body.classList.add("ok");
