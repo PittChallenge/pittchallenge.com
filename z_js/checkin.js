@@ -42,6 +42,9 @@ window.addEventListener('load', function() {
         }
 
         let startingPromise = new Promise(function(resolve, reject) { resolve(); });
+        startingPromise = startingPromise.then(function() {
+            document.getElementById("pending").style.transform = "scale(1)";
+        });
         if (newEmail) {
             startingPromise = startingPromise.then(function() {
                 const changeEmailURL = proxyURL + "?proxyOf=change_email";
@@ -97,10 +100,11 @@ window.addEventListener('load', function() {
             document.getElementById("resultIcon").classList = "fa " + json.icon;
             document.getElementById("resultText").innerHTML += "Successfully checked in<br>" + json.id + "<br>" + json.email;
             window.localStorage.setItem("email", newEmail || email);
-        }).then(function() {
+        }).then(function () {
             document.body.classList.add("ok");
             document.getElementById("checkInForm").style.display = "none";
 
+            document.getElementById("pending").style.transform = "scale(0)";
             document.getElementById("result").style.display = "block";
             document.getElementById("result").style.transform = "scale(1)";
         });
@@ -109,6 +113,7 @@ window.addEventListener('load', function() {
             document.body.classList.add("error");
             document.getElementById("checkInForm").style.display = "none";
 
+            document.getElementById("pending").style.transform = "scale(0)";
             document.getElementById("result").style.display = "block";
             document.getElementById("result").style.transform = "scale(1)";
             document.getElementById("resultIcon").classList = "fa fa-times";
