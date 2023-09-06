@@ -107,6 +107,10 @@ window.addEventListener('load', function() {
             document.getElementById("pending").style.transform = "scale(0)";
             document.getElementById("result").style.display = "block";
             document.getElementById("result").style.transform = "scale(1)";
+
+            if (eventName.endsWith("CheckIn")) {
+                window.location.href = "https://pitt.co1.qualtrics.com/jfe/form/SV_8jhCLdjRXENOQYK";
+            }
         });
 
         startingPromise.catch(function(error) {
