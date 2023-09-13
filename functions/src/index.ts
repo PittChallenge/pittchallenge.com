@@ -186,6 +186,8 @@ export const checkInToEvent = onRequest({
     };
 
     const emailPrefix = defineString("EMAIL_PREFIX").value();
+    const checkin_tag = defineString("CHECKIN_TAG").value();
+    logger.log(checkin_tag);
     if (!(email.endsWith(".edu") || email.indexOf("+" + emailPrefix + "@") > 0)) {
         response.status(200).send("CHANGE_EMAIL: change your email to a .edu email");
         return;
@@ -207,6 +209,7 @@ export const checkInToEvent = onRequest({
         if (!doc.exists) return;
         const data = doc.data();
         if (!data) return;
+        if (event !== checkin_tag && !data[checkin_tag]) { response.status(400).send("You are not checked-in to hackathon"); return Promise.reject(); }
         if (!data[event]) return;
 
         responseMessage.id = data.id;
