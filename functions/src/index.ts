@@ -206,10 +206,11 @@ export const checkInToEvent = onRequest({
         responseMessage.icon = data[event];
         return db.collection("checkin_email").doc(email).get();
     }).then((doc) => {
+        if (event !== checkin_tag && !doc.exists) { response.status(400).send("You are not checked-in to hackathon"); return Promise.reject(); }
         if (!doc.exists) return;
         const data = doc.data();
+        if (event !== checkin_tag && (!data || !data[checkin_tag])) { response.status(400).send("You are not checked-in to hackathon"); return Promise.reject(); }
         if (!data) return;
-        if (event !== checkin_tag && !data[checkin_tag]) { response.status(400).send("You are not checked-in to hackathon"); return Promise.reject(); }
         if (!data[event]) return;
 
         responseMessage.id = data.id;
